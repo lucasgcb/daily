@@ -2,6 +2,12 @@ import context
 import pytest
 from context import solution
 
+def test_sums():
+    the_list = [10, 15, 3, 7]
+    expected_sums = [25,13,17,18,22,10]
+    sums = solution.possible_sums(the_list)
+    assert set(expected_sums) == set(sums)
+
 
 def test_input():
     k = 17
