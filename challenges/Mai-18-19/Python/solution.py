@@ -27,7 +27,6 @@ def tree_deserial(root_node,serialized_tree):
         root_node.value = None
         return
     else:
-        root_node
         root_node.value = next_node
         root_node.left = Node(None)
         root_node.right = Node(None)
