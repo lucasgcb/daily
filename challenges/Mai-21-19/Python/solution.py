@@ -4,49 +4,41 @@ class Tree:
         self.right = right
         self.left = left
 
-    def print_tree(self):
-        print("oi")
+    def find_univals(self,root):
+        """
+        Return the size of the unival list.
+        """
+        univals_list = []
+        self._unival_finder(root,univals_list)
+        return len(univals_list)
 
-    def _find_greatest_left_depth(self,node,greatest=0):
-        greatest_on_right = greatest
-        greatest_on_left = greatest
-        try:
-            if node.left.value is not None:
-                greatest_on_left += 1
-                greatest_on_left = self._find_greatest_left_depth(node.left,greatest_on_left)
-                
-        except Exception:
-            pass
+    def _unival_finder(self, node, univals_list):    
+        """
+        Recursively check the tree, and add an unival to the list if:
+        both the current, right and left nodes hold the same value,
+        or both right and left nodes of the current node are None
+        """
         
-        try:
-            if node.right.value is not None:
-                greatest_on_right -= 1
-                greatest_on_right = self._find_greatest_left_depth(node.right,greatest_on_right)
-        except Exception:
-            pass
-        
-        return max([greatest_on_right,greatest_on_left])
+        right_is_equal = False
+        right_is_None = False
+        left_is_None = False
+        left_is_equal = False
 
-    def _find_greatest_right_depth(self,node,greatest=0):
-        greatest_on_right = greatest
-        greatest_on_left = greatest
         try:
-            if node.left.value is not None:
-                greatest_on_left -= 1
-                greatest_on_left = self._find_greatest_right_depth(node.left,greatest_on_left)
-                
+            left_is_equal = (node.left.value == node.value)
+            self._unival_finder(node.left,univals_list)
         except Exception:
-            pass
-        
-        try:
-            if node.right.value is not None:
-                greatest_on_right += 1
-                greatest_on_right = self._find_greatest_right_depth(node.right,greatest_on_right)
-        except Exception:
-            pass
-        
-        return max([greatest_on_right,greatest_on_left])
+            left_is_None = True 
 
+        try:
+            right_is_equal = (node.right.value == node.value)
+            self._unival_finder(node.right,univals_list)
+        except Exception:
+            right_is_None = True
+        
+        if right_is_equal and left_is_equal or left_is_None and right_is_None:
+            univals_list.append(node)
+        
     def _print_root(self,root):
         pass
 
